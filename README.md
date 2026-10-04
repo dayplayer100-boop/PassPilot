@@ -1,8 +1,8 @@
-# PassPilot Android App
+# PassPilot 1.24 – Web und Android (Testversion)
 
-Dies ist die native Android-Hülle für PassPilot 1.18 Test.
+Aktueller gemeinsamer Quellcode für die Web-App und die native Android-Hülle. Die lokalen Plus-Funktionen bleiben zum Testen offen; Zahlungen sind deaktiviert.
 
-Der aktuelle Funktionsstand und seine Grenzen stehen in [FEATURES-1.18.md](docs/FEATURES-1.18.md). Die älteren Funktionsbeschreibungen unten dokumentieren auch frühere Offline-Versionen; Online-Pässe können jetzt nach bewusster Freigabe Produktfotos enthalten. Echte Online-KI bleibt deaktiviert.
+Der aktuelle Funktionsstand, die Einrichtung und die Grenzen stehen in [UPDATE-1.24.md](docs/UPDATE-1.24.md); die technische Prüfung in [AUDIT-1.24.md](docs/AUDIT-1.24.md). Google-Anmeldung braucht die dort beschriebene Firebase-Konfiguration. E-Mail/SMS-Versand, produktives Family-Billing und selbstlernende KI sind nicht aktiviert.
 
 ## Was enthalten ist
 - komplette PassPilot-Web-App offline im APK
@@ -10,7 +10,28 @@ Der aktuelle Funktionsstand und seine Grenzen stehen in [FEATURES-1.18.md](docs/
 - Kamera- und Datei-Auswahl für Fotos/PDFs
 - lokale Barcode- und Etikett-Texterkennung mit optionaler Produktkatalog-Suche
 - QR-Pässe, Fristen, Historie, Übergabe und Backups aus der bestehenden App
-- kein Server und kein Account nötig
+- kompakte Übersicht, Verträge/Tarife, Wartung und verschlüsselte Gerätezugänge
+- lokale Verwaltung mit optionaler Konto-Anmeldung und verschlüsselter Geräte-Synchronisation
+
+## Web bauen und Firebase aktualisieren
+
+Node.js 22 verwenden:
+
+```sh
+npm ci
+npm run prepare:vendor
+npm run build:web
+```
+
+Ausgabe: `web-dist/`. Projekt: `passpilot-69f7c`; Hosting-Site: **`passpilot-app`**. Die andere Site `passpilot-69f7c` nicht überschreiben. GitHub und der Quellcode-Export enthalten `firebase.json` und `.firebaserc` im Hauptordner.
+
+Nach dem Web-Build und mit eigener Firebase-Anmeldung:
+
+```sh
+npx --yes firebase-tools@14.18.0 deploy --only hosting,firestore:rules --project passpilot-69f7c
+```
+
+Ein GitHub-Push veröffentlicht kein Firebase. Ein Web-Build enthält keine Android-APKs; ohne APK-Paket bleibt der bisherige Download-Fallback erhalten. Für aktuelle Android-Downloads das vollständige Hosting-Paket mit den passend signierten APKs verwenden, siehe [Update-Anleitung](docs/UPDATE-1.24.md).
 
 ## Automatischer APK-Build mit GitHub Actions
 1. Projekt in ein GitHub-Repository hochladen.
@@ -25,7 +46,11 @@ Android kann beim direkten Installieren nach Erlaubnis für „Unbekannte Apps i
 Das erzeugte APK ist ein Debug/Test-Build. Für Google Play wird später ein eigener Release-Key und ein signierter Release-Build benötigt.
 
 ## Signatur der Test-APK
-Ab Version 1.1 verwendet der Debug-Build einen festen **Test-Schlüssel**, damit spätere Testversionen über die vorherige APK installiert werden können. Dieser Schlüssel liegt absichtlich im Testprojekt und darf **nicht** für eine produktive Play-Store-Version verwendet werden.
+Die separat bereitgestellten Test-APKs werden mit dem bisherigen privaten Test-Schlüssel signiert. **Private Signierschlüssel sind im GitHub-Repository und im Quellcode-Export nicht enthalten.** GitHub Actions erzeugt einen normalen Debug-Build mit einem eigenen Debug-Schlüssel; dieser kann eine vorhandene, anders signierte Installation nicht aktualisieren. Für ein Update ist derselbe bisherige Signierschlüssel erforderlich. Die bisherige App nicht zur Umgehung eines Signaturfehlers deinstallieren, da lokale Daten verloren gehen könnten.
+
+## Archiv: ältere Funktionsbeschreibungen
+
+Die folgenden Abschnitte dokumentieren frühere Versionen. Für Version 1.24 gelten die Angaben und Grenzen der oben verlinkten Update-Anleitung.
 
 
 ## Verkaufen mit öffentlichem QR-Code
