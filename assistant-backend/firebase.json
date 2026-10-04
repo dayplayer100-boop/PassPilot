@@ -1,0 +1,26 @@
+{
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20"
+  },
+  "hosting": {
+    "site": "passpilot-app",
+    "public": "public",
+    "rewrites": [
+      {
+        "source": "/api/assistant",
+        "function": {
+          "functionId": "passpilotAssistant",
+          "region": "europe-west3"
+        }
+      },
+      {
+        "source": "/api/document",
+        "function": {
+          "functionId": "passpilotDocument",
+          "region": "europe-west3"
+        }
+      }
+    ]
+  }
+}

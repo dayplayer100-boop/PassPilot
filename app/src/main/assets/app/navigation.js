@@ -1,0 +1,12 @@
+(function(global){
+'use strict';
+let stack=[],restoring=false,last='';
+const views=['dashboard','products','contracts','maintenance','vault','calendar','actions','backup','history'];
+function remember(target){if(restoring)return;const next={view:views.includes(target.view)?target.view:'dashboard',productId:target.productId||'',hash:location.hash};const key=JSON.stringify(next);if(key===last)return;last=key;stack.push(next);if(location.protocol!=='file:'){if(stack.length===1)history.replaceState({passpilot:next},'');else history.pushState({passpilot:next},'');}}
+function restore(target){if(!target||!views.includes(target.view))target={view:'dashboard'};restoring=true;try{currentView=target.view;if(location.hash!==(target.hash||''))history.replaceState(history.state,'',location.pathname+(target.hash||''));render();if(target.productId&&getProduct(target.productId))openProduct(target.productId);last=JSON.stringify({view:currentView,productId:target.productId||'',hash:location.hash});scrollTo(0,0);}finally{restoring=false;}}
+function closeTop(){if(document.getElementById('feedbackDialog').open){PassPilotFeedback.close();return true;}const editor=document.querySelector('dialog.image-editor[open]');if(editor){editor.dispatchEvent(new Event('cancel',{cancelable:true}));return true;}if(document.getElementById('helpDialog').open){PassPilotAssistant.close();return true;}const d=document.getElementById('modal');if(d.open){if(d.dataset.dirty==='true'&&!confirm('Nicht gespeicherte Änderungen verwerfen?'))return true;closeModal();return true;}return false;}
+function back(){if(closeTop())return true;if(stack.length>1){stack.pop();restore(stack.at(-1));}else if(currentView!=='dashboard'||document.getElementById('app').dataset.productId){stack=[{view:'dashboard',productId:'',hash:''}];restore(stack[0]);}else toast('Du bist auf der Übersicht.');return true;}
+function silent(fn){const old=restoring;restoring=true;try{return fn();}finally{restoring=old;}}
+function start(){document.addEventListener('input',e=>{if(e.target.closest('#modal form'))document.getElementById('modal').dataset.dirty='true';});document.getElementById('modal').addEventListener('close',()=>{delete document.getElementById('modal').dataset.dirty;});global.addEventListener('popstate',e=>{if(/^#(?:pass|online|handoff|asset|receive)=/.test(location.hash))return;if(closeTop()){history.pushState({passpilot:stack.at(-1)},'');return;}if(stack.length>1)stack.pop();restore(e.state?.passpilot||stack.at(-1));});}
+global.PassPilotNavigation={remember,back,silent,start};
+})(window);

@@ -1,0 +1,9 @@
+'use strict';
+// Run as Firebase project administrator with Application Default Credentials.
+// No credential contents are read, no codes or private keys are printed.
+const fs=require('node:fs'),crypto=require('node:crypto');
+const {initializeApp,applicationDefault}=require('firebase-admin/app');const {getFirestore}=require('firebase-admin/firestore');
+const {verify}=require('./license-service.cjs');const {offers}=require('./billing-policy.cjs');
+async function seed(db,codes){const seen=new Set();for(const code of codes){const p=verify(code);if(seen.has(p.id))continue;seen.add(p.id);await db.runTransaction(async tx=>{const ref=db.doc('licenseCodes/'+p.id);const old=await tx.get(ref);if(old.exists)return;tx.set(ref,{codeHash:crypto.createHash('sha256').update(code.trim()).digest('hex'),grant:'lifetime',edition:p.edition,enabled:true,issuedAt:p.issuedAt||'',createdAt:new Date()});});}await db.doc('billingConfig/public').set({version:1,paymentsEnabled:false,currency:'EUR',interval:'month',plans:offers,updatedAt:new Date()});return seen.size;}
+if(require.main===module){const [projectId,file]=process.argv.slice(2);if(projectId!=='passpilot-69f7c'||!file)throw Error('Usage: node setup-project.cjs passpilot-69f7c PRIVATE-CODES.txt');const codes=fs.readFileSync(file,'utf8').split('\n').filter(l=>/^\d{2}\t/.test(l)).map(l=>l.split('\t')[1].trim());if(!codes.length)throw Error('Keine Codes im nummerierten Format.');initializeApp({credential:applicationDefault(),projectId});seed(getFirestore(),codes).then(count=>console.log(`${count} signierte Codes registriert; Tarifvorbereitung gespeichert, Zahlungen deaktiviert. Bestehende Bindungen bleiben erhalten.`)).catch(e=>{console.error(e.code||'SETUP_FAILED','Firebase-Einrichtung fehlgeschlagen. Google-Admin-Zugang und Projekt prüfen.');process.exitCode=1;});}
+module.exports={seed};

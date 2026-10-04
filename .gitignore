@@ -1,0 +1,11 @@
+
+*-debug.log
+firebase-debug.log
+node_modules/
+web-dist/
+
+*.jks
+*.p12
+.env*
+*release*.keystore
+private-artifacts/

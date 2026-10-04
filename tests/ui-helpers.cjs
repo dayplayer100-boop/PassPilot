@@ -1,0 +1,2 @@
+// Open closed disclosures through visible summaries, as a keyboard/touch user would.
+exports.reveal=async locator=>{const indexes=await locator.first().evaluate(el=>{const details=[];for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS'&&!p.open)details.unshift(p);const all=[...document.querySelectorAll('details')];return details.map(d=>all.indexOf(d));});for(const index of indexes)await locator.page().locator('details').nth(index).locator(':scope > summary').click();};

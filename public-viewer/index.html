@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; connect-src https://firestore.googleapis.com https://identitytoolkit.googleapis.com">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <title>PassPilot – Öffentlicher Produktpass</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="public-pass.js" defer></script>
+  <script src="viewer.js" defer></script>
+  <script src="firebase-viewer.js" defer></script>
+  <script src="asset-viewer.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><div class="brand"><span class="brand-mark">P</span><span class="brand-copy"><strong>PassPilot</strong><small>Öffentlicher Produktpass</small></span></div></header>
+  <main id="publicPass" class="app-shell" aria-live="polite"><section class="card"><h1>Produktpass öffnen</h1><p>Scanne den PassPilot-QR-Code eines Produkts, um die freigegebenen Angaben zu sehen. Dafür brauchst du weder eine App noch einen Account.</p></section></main>
+  <noscript>Bitte JavaScript aktivieren, um den Produktpass zu lesen.</noscript>
+</body>
+</html>

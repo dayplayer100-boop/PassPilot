@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.passpilot.app'
+    compileSdk 35
+
+
+    defaultConfig {
+        applicationId 'com.passpilot.app'
+        minSdk 24
+        targetSdk 35
+        versionCode 25
+        versionName '1.24.0-test'
+    }
+
+    signingConfigs {
+        if (System.getenv('PASSPILOT_RELEASE_KEYSTORE')) {
+            release {
+                storeFile file(System.getenv('PASSPILOT_RELEASE_KEYSTORE'))
+                storePassword System.getenv('PASSPILOT_RELEASE_STORE_PASSWORD')
+                keyAlias System.getenv('PASSPILOT_RELEASE_KEY_ALIAS')
+                keyPassword System.getenv('PASSPILOT_RELEASE_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (System.getenv('PASSPILOT_RELEASE_KEYSTORE')) signingConfig signingConfigs.release
+        }
+
+        debug {
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.credentials:credentials:1.5.0'
+    implementation 'androidx.credentials:credentials-play-services-auth:1.5.0'
+    implementation 'com.google.android.libraries.identity.googleid:googleid:1.1.1'
+    implementation 'org.jsoup:jsoup:1.21.2'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.json:json:20240303'
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.22')
+    implementation 'androidx.core:core:1.15.0'
+    implementation 'androidx.activity:activity:1.9.3'
+    implementation 'androidx.camera:camera-camera2:1.4.2'
+    implementation 'androidx.camera:camera-lifecycle:1.4.2'
+    implementation 'androidx.camera:camera-view:1.4.2'
+    implementation 'com.google.mlkit:barcode-scanning:17.3.0'
+    implementation 'com.google.mlkit:text-recognition:16.0.1'
+}

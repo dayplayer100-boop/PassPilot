@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="Produkte scannen, Rechnungen sichern, Garantie und Wartung verwalten. PassPilot funktioniert lokal und bietet freiwillige verschlüsselte Synchronisation.">
+  <title>PassPilot – Produkte, Belege und Garantie einfach verwalten</title>
+  <meta property="og:title" content="PassPilot – Der Lebenslauf deiner Produkte">
+  <meta property="og:description" content="Produkt scannen, Rechnung sichern, Garantie im Blick behalten und sicher weitergeben. Lokal nutzbar, mit freiwilliger verschlüsselter Synchronisation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://passpilot-app.web.app/">
+  <meta property="og:image" content="https://passpilot-app.web.app/icons/share-banner.png">
+  <meta property="og:image:alt" content="PassPilot – Code, Rechnung, Produktfoto: der Lebenslauf deiner Produkte">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://passpilot-app.web.app/">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="qrcode-lite.js" defer></script>
+  <script src="public-pass.js" defer></script>
+  <script src="sale-sheet.js" defer></script>
+  <script src="calendar.js" defer></script>
+  <script src="product-scan.js" defer></script>
+  <script src="manuals.js" defer></script>
+  <script src="project-config.js" defer></script>
+  <script src="sharing.js" defer></script>
+  <script src="identity.js" defer></script>
+  <script src="lifecycle.js" defer></script>
+  <script src="firebase.js" defer></script>
+  <script src="accounts.js" defer></script>
+  <script src="recognition.js" defer></script>
+  <script src="improvements.js" defer></script>
+  <script src="image-editor.js" defer></script>
+  <script src="capture.js" defer></script>
+  <script src="legal-config.js" defer></script>
+  <script src="assistant-config.js" defer></script>
+  <script src="document-ai.js" defer></script>
+  <script src="assistant.js" defer></script>
+  <script src="experience.js" defer></script>
+  <script src="sync.js" defer></script>
+  <script src="model-facts.js" defer></script>
+  <script src="billing-policy.js" defer></script>
+  <script src="upgrades.js" defer></script>
+  <script src="device-access.js" defer></script>
+  <script src="obligations.js" defer></script>
+  <script src="market-export.js" defer></script>
+  <script src="navigation.js" defer></script>
+  <script src="organizer.js" defer></script>
+  <script src="notifications.js" defer></script>
+  <script src="feedback.js" defer></script>
+  <script src="google-auth.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#app">Zum Inhalt springen</a>
+  <noscript>PassPilot benötigt JavaScript.</noscript>
+  <header class="topbar">
+    <button class="brand" data-action="home" aria-label="Startseite">
+      <span class="brand-mark">P</span>
+      <span class="brand-copy"><strong>PassPilot</strong><small>Digitaler Produkt- & Übergabepass</small></span>
+    </button>
+    <div class="top-actions">
+      <button type="button" class="icon-btn feedback-trigger" data-action="feedback-open" aria-label="Fehler oder Verbesserung melden">!</button>
+      <span class="mode-pill">Lokal · Online optional</span>
+      <button class="icon-btn" data-action="settings" aria-label="Einstellungen">⚙️</button>
+    </div>
+  </header>
+
+  <main id="app" class="app-shell" tabindex="-1"></main>
+
+  <nav class="bottom-nav" aria-label="Hauptnavigation">
+    <button data-nav="dashboard" class="active"><span>⌂</span><small>Übersicht</small></button>
+    <button data-nav="products"><span>▦</span><small>Produkte</small></button>
+    <button data-action="new-product" class="nav-primary" aria-label="Produkt hinzufügen">＋</button>
+    <button data-nav="calendar"><span>▤</span><small>Kalender</small></button>
+    <button type="button" data-action="more-open" aria-label="Weitere Bereiche"><span>⋯</span><small>Mehr</small></button>
+  </nav>
+
+  <footer class="app-footer"><a class="ghost-btn" href="privacy.html">Datenschutz</a><a class="ghost-btn" href="imprint.html">Impressum</a><button type="button" class="ghost-btn" data-action="android-download">Android-App herunterladen</button><a class="ghost-btn" href="copyright.html">© 2026 PassPilot</a></footer>
+  <button type="button" class="help-fab" data-action="help-open" aria-label="Hilfe-Assistent öffnen" aria-controls="helpDialog" aria-expanded="false"><span aria-hidden="true">✦</span></button>
+  <dialog id="modal"></dialog>
+  <dialog id="feedbackDialog"></dialog>
+  <dialog id="helpDialog" class="assistant-panel"></dialog>
+  <div id="toast" class="toast" role="status"></div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+PassPilot project notice – 2026
+
+© 2026 PassPilot. All rights reserved in protectable original project contributions.
+The legal rights holder must be completed by the operator; the project name is not a registration of copyright or a trademark.
+
+No general license to redistribute, sell, sublicense or publish the project's own source, branding or original design is granted by this distribution. A copy supplied to the operator for development or backup does not grant a general public source-code license. Statutory rights remain unaffected.
+
+This notice does not claim exclusive rights in unprotectable ideas, functionality, standards or wholly machine-generated material. Applicable rights depend on the actual authorship and jurisdiction.
+
+Third-party components remain governed by their own licenses and terms. In particular this notice does not restrict permissions granted by MIT, Apache-2.0 or other third-party licenses. Their copyright and attribution notices must be retained. See THIRD-PARTY-NOTICES.txt and the component license files.

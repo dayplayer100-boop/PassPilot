@@ -1,0 +1,14 @@
+PassPilot third-party notices
+
+QRCode for JavaScript: Copyright (c) 2009 Kazuhiko Arase. MIT license. Notices are retained in qrcode-lite.js. https://github.com/kazuhikoarase/qrcode-generator
+Jsoup: MIT license. https://jsoup.org/license
+AndroidX Core, Activity and CameraX: Apache License 2.0. https://www.apache.org/licenses/LICENSE-2.0
+Google ML Kit SDK: Google ML Kit terms and associated third-party notices. https://developers.google.com/ml-kit/terms
+ZXing browser and library: Apache License 2.0; original notices included in web/vendor/licenses.
+Tesseract.js / Tesseract.js-core / tessdata_fast: Apache License 2.0; original notices included in web/vendor/licenses.
+pdf-lib: MIT license; original notice included in web/vendor/licenses.
+PDF.js: Apache License 2.0; original notice included in web/vendor/licenses.
+Terser (build tool only): BSD-2-Clause, distributed through its npm package; not needed at application runtime.
+Firebase functions/admin (optional backend only): their respective Apache-2.0 licenses; package license files remain in deployment dependencies.
+
+This list supplements the exact component license files and SDK package metadata; it does not replace their license texts or confer new restrictions on third-party software.
