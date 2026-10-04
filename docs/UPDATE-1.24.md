@@ -41,19 +41,19 @@ npm run prepare:vendor
 npm run build:web
 ```
 
-Ausgabe: `web-dist`. Firebase-Konfiguration liegt derzeit unter `firebase/`. Ohne APK-Parameter bleibt der bisherige öffentliche Download-Fallback bestehen. Für ein vollständiges Hosting-Paket mit geprüften APKs:
+Ausgabe: `web-dist`. Firebase-Konfiguration liegt im Quellcode-Export und GitHub zusätzlich im Hauptordner. Firebase Spark verbietet APK-Dateien. Die Website, Download-Seite und Update-Metadaten bleiben auf Firebase; beide geprüften APKs liegen separat in GitHub Releases. Für ein vorbereitetes Spark-Paket, optional mit Prüfung der lokalen APKs:
 
 ```sh
 python scripts/package-firebase-web.py PassPilot-Firebase-Web-1.24.zip --apk PassPilot-1.24-Test.apk --apk-32 PassPilot-1.24-Test-32bit.apk
 ```
 
-Dieses Paket enthält Hosting-Dateien, Regeln und beide APKs. Nach dem Entpacken im Paketordner veröffentlichen:
+Dieses Paket enthält Hosting-Dateien und Regeln, keine APKs. `--apk` und `--apk-32` prüfen lediglich die lokalen APKs gegen die veröffentlichten Metadaten. Ohne diese Parameter bleibt das Paket ebenfalls vollständig. Nach dem Entpacken im Paketordner veröffentlichen:
 
 ```sh
 npx --yes firebase-tools@14.18.0 deploy --only hosting,firestore:rules --project passpilot-69f7c
 ```
 
-APKs liegen dann direkt unter `/download/`; keine externe Download-Weiterleitung. `latest.json` enthält Version, Buildnummer, Größe und SHA-256 für beide Varianten. Die Android-Updateprüfung benutzt diesen Zugang; Android bestätigt und prüft die Installation weiterhin selbst.
+`/download/` liegt auf derselben Website. Die stabilen Pfade `/download/PassPilot-Test.apk` und `/download/PassPilot-Test-32bit.apk` leiten direkt zu den passenden GitHub-Release-Dateien weiter. Kein kostenpflichtiges Firebase-Upgrade und keine fremde Download-Landingpage sind dafür erforderlich. `latest.json` enthält Version, Buildnummer, Größe und SHA-256 für beide Varianten. Die Android-Updateprüfung benutzt diesen Zugang; Android bestätigt und prüft die Installation weiterhin selbst.
 
 Keine Veröffentlichung wurde während der separaten Windows-Einrichtung ausgeführt. Der lokale Quellcode-Export enthält weder APKs noch private Signierschlüssel, Premium-Codes, Nutzerbestände, Abhängigkeiten oder Build-Caches. Für installierbare Updates muss derselbe bisherige Signierschlüssel verwendet werden. Ein neuer Schlüssel kann eine bestehende Installation nicht aktualisieren.
 

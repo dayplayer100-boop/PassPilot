@@ -17,6 +17,8 @@ fs.cpSync(path.join(root, 'app/src/main/assets/app'), dist, {recursive:true});
 fs.cpSync(path.join(root, 'public-viewer'), path.join(dist, 'pass'), {recursive:true});
 const viewerPath=path.join(dist,'pass/index.html');fs.writeFileSync(viewerPath,fs.readFileSync(viewerPath,'utf8').replace('<html lang="de">','<html lang="de" data-app-root="../">'));
 fs.cpSync(path.join(root, 'web/vendor'), path.join(dist, 'vendor'), {recursive:true});
+// Spark hosts the web UI and update metadata; signed APKs live in GitHub Releases.
+fs.cpSync(path.join(root, 'web/download'), path.join(dist, 'download'), {recursive:true});
 for (const file of ['web-entry.js', 'web-runtime.js', 'web-tools.js', 'web.css']) fs.copyFileSync(path.join(root, 'web', file), path.join(dist, file));
 fs.writeFileSync(path.join(dist, 'deployment-config.js'), 'window.PassPilotWebConfig = ' + JSON.stringify(config) + ';\n');
 const indexPath = path.join(dist, 'index.html');

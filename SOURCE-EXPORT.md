@@ -24,7 +24,7 @@ Aus dem Hauptordner nach dem Build und mit vorhandener Firebase-Anmeldung:
 npx --yes firebase-tools@14.18.0 deploy --only hosting,firestore:rules --project passpilot-69f7c
 ```
 
-Es wurde für diese Übergabe nichts deployt und kein Firebase-Projekt geändert. Die APKs sind absichtlich nicht im Quellcode-ZIP. Ein normales Web-Build behält den vorherigen Download-Fallback; ein vollständiges Web-/APK-Paket erstellt `scripts/package-firebase-web.py --apk ... --apk-32 ...`. Google und Feedback-Einrichtung sind in `docs/UPDATE-1.24.md` beschrieben. Ein Hosting-Deploy veröffentlicht keine optionalen Cloud Functions.
+Firebase wird aus diesem Export nicht automatisch veröffentlicht. APKs sind absichtlich nicht im Quellcode-ZIP: Firebase Spark verbietet ausführbare Dateien. Das normale Web-Build enthält die Download-Seite und Update-Metadaten. Stabile APK-Pfade leiten direkt zu GitHub Releases weiter. `scripts/package-firebase-web.py` erzeugt ein Spark-kompatibles Web-ZIP; `--apk ... --apk-32 ...` prüft lokale APKs, ohne sie einzubetten. Google und Feedback-Einrichtung sind in `docs/UPDATE-1.24.md` beschrieben. Ein Hosting-Deploy veröffentlicht keine optionalen Cloud Functions.
 
 ## Android und GitHub
 

@@ -5,7 +5,12 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/*.apk",
+      "**/*.ipa",
+      "**/*.exe",
+      "**/*.dll",
+      "**/*.bat"
     ],
     "headers": [
       {
@@ -41,7 +46,12 @@
     "redirects": [
       {
         "source": "/download/PassPilot-Test.apk",
-        "destination": "https://passpilot-product-pass.dayplayer100.chatgpt.site/download/PassPilot-1.23-Test.apk",
+        "destination": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.24.0-test/PassPilot-1.24-Test.apk",
+        "type": 302
+      },
+      {
+        "source": "/download/PassPilot-Test-32bit.apk",
+        "destination": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.24.0-test/PassPilot-1.24-Test-32bit.apk",
         "type": 302
       }
     ]

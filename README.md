@@ -31,7 +31,7 @@ Nach dem Web-Build und mit eigener Firebase-Anmeldung:
 npx --yes firebase-tools@14.18.0 deploy --only hosting,firestore:rules --project passpilot-69f7c
 ```
 
-Ein GitHub-Push veröffentlicht kein Firebase. Ein Web-Build enthält keine Android-APKs; ohne APK-Paket bleibt der bisherige Download-Fallback erhalten. Für aktuelle Android-Downloads das vollständige Hosting-Paket mit den passend signierten APKs verwenden, siehe [Update-Anleitung](docs/UPDATE-1.24.md).
+Ein GitHub-Push veröffentlicht kein Firebase. Firebase Spark verbietet APK-Dateien. Web-Builds enthalten die Download-Seite und Update-Metadaten; die stabilen APK-URLs leiten direkt zu den geprüften Dateien in [GitHub Releases](https://github.com/dayplayer100-boop/PassPilot/releases/tag/v1.24.0-test) weiter. Das vorbereitete Hosting-ZIP enthält keine ausführbaren Dateien. Details in der [Update-Anleitung](docs/UPDATE-1.24.md).
 
 ## Automatischer APK-Build mit GitHub Actions
 1. Projekt in ein GitHub-Repository hochladen.
