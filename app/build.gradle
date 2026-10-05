@@ -11,8 +11,8 @@ android {
         applicationId 'com.passpilot.app'
         minSdk 24
         targetSdk 35
-        versionCode 25
-        versionName '1.24.0-test'
+        versionCode 26
+        versionName '1.25.0-test'
     }
 
     signingConfigs {

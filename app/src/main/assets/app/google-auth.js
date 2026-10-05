@@ -6,7 +6,7 @@ function preload(){if(global.PassPilotAndroid)return Promise.resolve(null);if(!s
 async function login(){
  const cfg=PassPilotFirebase.config();if(!cfg)throw Error('Anmeldung ist noch nicht eingerichtet.');
  if(global.PassPilotAndroid?.googleSignIn){let client=cfg.googleClientId;try{if(!client){const d=await PassPilotFirebase.http(PassPilotFirebase.root()+'/billingConfig/public?key='+cfg.apiKey,'GET');client=d.fields?.googleClientId?.stringValue;}}catch{}
-  if(!/^\d+-[a-z0-9]+\.apps\.googleusercontent\.com$/.test(client||''))throw Error('Google-Anmeldung für Android ist noch nicht eingerichtet. Du kannst dich mit E-Mail anmelden.');
+  if(!/^\d+-[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(client||''))throw Error('Google-Anmeldung für Android ist noch nicht eingerichtet. Du kannst dich mit E-Mail anmelden.');
   const result=await PassPilotPlus.request('googleSignIn',client);if(!result.idToken)throw Error('Google-Anmeldung wurde abgebrochen.');
   return PassPilotFirebase.signInWithGoogle(result.idToken);
  }

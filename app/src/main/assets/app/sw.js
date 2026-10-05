@@ -1,4 +1,4 @@
-const CACHE='passpilot-1.24.0-web-1';
+const CACHE='passpilot-1.25.0-web-1';
 const ASSETS=['./navigation.js','./organizer.js','./notifications.js','./feedback.js','./google-auth.js','./device-access.js','./obligations.js','./market-export.js','./accounts.js','./billing-policy.js','./model-facts.js','./upgrades.js','./identity.js','./lifecycle.js','./image-editor.js','./document-ai.js','./sharing.js','./recognition.js','./licenses/qrcode-MIT.txt','./third-party-notices.txt','./assistant.js','./assistant-config.js','./copyright.html','./icons/icon-maskable-512.png','./experience.js','./sync.js','./legal-config.js','./privacy.html','./imprint.html','./icons/share-banner.png','./project-config.js','./capture.js','./','./index.html','./styles.css','./app.js','./product-scan.js','./manuals.js','./improvements.js','./firebase.js','./sale-sheet.js','./calendar.js','./public-pass.js','./qrcode-lite.js','./manifest.json','./icons/icon-192.png','./icons/icon-512.png'];
 const OPTIONAL=[];
 self.addEventListener('install',event=>{self.skipWaiting();event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));});

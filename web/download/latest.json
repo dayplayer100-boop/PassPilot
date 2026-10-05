@@ -1,16 +1,16 @@
 {
-  "version": "1.24.0-test",
-  "versionCode": 25,
+  "version": "1.25.0-test",
+  "versionCode": 26,
   "variants": {
     "arm64-v8a": {
-      "url": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.24.0-test/PassPilot-1.24-Test.apk",
-      "sha256": "a6cbe72bd1eda16a73927d4507efb50ac94df412309e05355064a2849cf19bce",
-      "bytes": 24938620
+      "url": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.25.0-test/PassPilot-1.25-Test.apk",
+      "bytes": 24942620,
+      "sha256": "ab790ca93d4ff5856e65d89581456ad1839abdccdb0932537e772a128d4b22cf"
     },
     "armeabi-v7a": {
-      "url": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.24.0-test/PassPilot-1.24-Test-32bit.apk",
-      "sha256": "0bb7ae9b4d899b5be360516381cb4703915959fdbf24fffdc0a8b3f905f3192c",
-      "bytes": 18957076
+      "url": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.25.0-test/PassPilot-1.25-Test-32bit.apk",
+      "bytes": 18961076,
+      "sha256": "ebb2504b84f83bbac4184d43c3820a4c1a39e83c3114b19eb8b3426e360561bb"
     }
   }
 }

@@ -36,7 +36,7 @@ const mime={'.html':'text/html','.js':'application/javascript','.css':'text/css'
   await p.evaluate(()=>PassPilotOrganizer.show('products'));assert.doesNotMatch(await p.locator('#app').innerText(),/Mein Mobilfunktarif/);
   // Maintenance requires only a task and next date; recurrence and documents remain optional.
   await p.evaluate(()=>PassPilotOrganizer.show('maintenance'));await p.locator('[data-action=maintenance-new]').click();await p.locator('#organizerProduct').selectOption('heat');await p.locator('#organizerAdd button.primary-btn').click();
-  await p.locator('#obligationForm [name=title]').fill('Heizungswartung');await p.locator('[name=nextDate]').fill('2027-04-02');await p.locator('[name=intervalMonths]').fill('12');
+  await p.locator('#obligationForm [name=title]').fill('Heizungswartung');await p.locator('[name=nextDate]').fill('2027-04-02');await p.locator('[name=repeat]').check();await p.locator('[name=repeatEvery]').fill('12');
   assert(!await p.locator('[name=amount]').isVisible());await p.locator('#obligationForm button.primary-btn').click();assert.match(await p.locator('#app').innerText(),/Heizungswartung/);
   assert.equal(await p.evaluate(()=>getProduct('heat').obligations[0].intervalMonths),12);
   // Test mode exposes existing premium services immediately, without payment or an artificial product cap.

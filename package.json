@@ -1,7 +1,7 @@
 {
   "name": "passpilot-build",
   "private": true,
-  "version": "1.24.0-test",
+  "version": "1.25.0-test",
   "devDependencies": {
     "terser": "5.43.1",
     "playwright": "1.62.1",

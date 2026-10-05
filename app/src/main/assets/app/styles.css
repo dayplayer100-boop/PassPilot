@@ -144,3 +144,23 @@ input:not([type=checkbox]):not([type=radio]):not([type=hidden]),textarea,select{
 .backup-reminder strong{font-size:.86rem}.backup-reminder small{display:block;font-size:.75rem;color:var(--muted);margin-top:3px}.backup-reminder .soft-btn{padding:9px 12px;font-size:.8rem;flex-shrink:0}
 
 .hub-icon svg{width:23px;height:23px}.form-actions{bottom:0;padding-bottom:12px}
+
+/* Verträge & Termine: lesbare mobile Formulare und Finanzübersicht. */
+#obligationForm,#organizerType{display:grid;gap:18px;min-width:0}
+#obligationForm [hidden]{display:none!important}
+#obligationForm [data-ob-kind]>.field{margin-bottom:16px}
+#obligationForm .simple-more{padding:14px;border:1px solid var(--line);border-radius:16px}
+#obligationForm .simple-more[open]>summary{margin-bottom:16px}
+#obligationForm .simple-more>label{display:block;margin:16px 0 8px}
+#ob-finance-summary{margin:18px 0;padding:15px;border-radius:14px;background:#edf3ff;line-height:1.65;overflow-wrap:anywhere}
+.finance-final{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+.finance-final h3{margin:0 0 14px}.finance-final .checkbox-row{min-height:48px}
+.finance-chart{margin-top:20px!important;padding:20px!important}.finance-chart h3{margin:0 0 18px;overflow-wrap:anywhere}
+.finance-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 20px}
+.finance-stats>div{background:#f3f6fc;padding:14px;border-radius:13px;min-width:0}
+.finance-stats dt{font-size:13px;color:var(--muted);margin-bottom:6px}.finance-stats dd{margin:0;font-size:19px;font-weight:700;overflow-wrap:anywhere}
+.finance-chart table{width:100%;margin-top:14px}.finance-chart th,.finance-chart td{padding:10px;text-align:left}
+.type-list{display:grid;gap:8px;margin-bottom:22px}.type-row{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px;background:#f4f7fc;border-radius:13px}
+.type-row>span{min-width:0;overflow-wrap:anywhere}.type-row small{display:block;margin-top:5px}.type-row button{flex-shrink:0}
+#organizerAdd>.field{margin-bottom:18px}
+@media(max-width:380px){.finance-stats{grid-template-columns:1fr}.type-row{align-items:flex-start;flex-direction:column}}

@@ -65,7 +65,8 @@ Die Regel-Datei ist für das eigene PassPilot-Projekt vorgesehen.
 COMPUTER (Node.js muss installiert sein)
 1. ZIP vollständig entpacken und ein Terminal im entpackten Ordner öffnen.
 2. npx --yes firebase-tools@14.18.0 login
-3. npx --yes firebase-tools@14.18.0 deploy --only hosting,firestore:rules --project {project}
+3. python setup-auth.py  # Google Cloud Shell: einmalige Anmelde-Einrichtung
+4. npx --yes firebase-tools@14.18.0 deploy --only hosting,firestore:rules --project {project}
 
 NUR HANDY / GOOGLE CLOUD SHELL
 1. https://shell.cloud.google.com/ öffnen und im eigenen Google-Konto anmelden.
@@ -115,6 +116,7 @@ with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
     archive.writestr('.firebaserc', json.dumps({'projects': {'default': project}}, indent=2))
     archive.writestr('ANLEITUNG.txt', instructions)
     archive.write(root/'firebase/firestore.rules','firestore.rules')
+    archive.write(root/'scripts/setup-firebase-auth.py','setup-auth.py')
     for file in assets:
         archive.write(file, 'public/' + file.relative_to(root / 'web-dist').as_posix())
 with zipfile.ZipFile(output) as archive:
