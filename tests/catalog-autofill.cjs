@@ -19,7 +19,7 @@ const SONY={name:'Sony Wireless Noise Cancelling Headphones WH-1000XM5 Black',br
   await page.evaluate(()=>{localStorage.setItem('passpilot-state-v2',JSON.stringify({version:4,settings:{introSeen:true},products:[]}));localStorage.removeItem('passpilot-catalog-v1')});
   await page.reload();
   const field=name=>page.locator('#productForm [name="'+name+'"]');
-  const open=async()=>{if(await page.locator('#modal[open]').count()){await reveal(page.locator('#modal [data-action="close-modal"]').first());await page.locator('#modal [data-action="close-modal"]').first().click();}await reveal(page.locator('.bottom-nav [data-action="new-product"]'));await page.locator('.bottom-nav [data-action="new-product"]').click()};
+  const open=async()=>{if(await page.locator('#modal[open]').count()){await reveal(page.locator('#modal [data-action="close-modal"]').first());await page.locator('#modal [data-action="close-modal"]').first().click();}await reveal(page.locator('.bottom-nav [data-action="add-entry"]'));await page.locator('.bottom-nav [data-action="add-entry"]').click();await page.locator('#modal [data-action=entry-category][data-kind=product]').click()};
   const scan=async code=>{await reveal(page.locator('[data-action="scan-product"]'));await page.locator('[data-action="scan-product"]').click();await page.evaluate(code=>PassPilotScan.receiveNativeResult(scans.at(-1),{status:'success',text:'',barcodes:[{rawValue:code,format:32}]}),code)};
   const result=async(fields,complete=true)=>page.evaluate(({fields,complete})=>{const r=catalogRequests.at(-1);PassPilotScan.receiveCatalogResult(r.id,{code:r.code,status:'success',fields,source:'Go-UPC',complete})},{fields,complete});
   const count=()=>page.evaluate(()=>catalogRequests.length);
@@ -102,7 +102,7 @@ const SONY={name:'Sony Wireless Noise Cancelling Headphones WH-1000XM5 Black',br
   },{SONY,EAN});
   await scan(EAN);await page.waitForFunction(name=>document.querySelector('#productForm [name="name"]').value===name,SONY.name);
   assert.equal(await field('model').inputValue(),'WH-1000XM5');assert.equal(await field('price').inputValue(),'');assert.equal(await field('serial').inputValue(),'');
-  assert.equal(await page.evaluate(()=>urls.length),4);assert.equal((await cache()).length,1);
+  assert.equal(await page.evaluate(()=>urls.filter(u=>/upcitemdb|openproductsfacts|openfoodfacts|openbeautyfacts/.test(u)).length),4);assert(await page.evaluate(()=>urls.every(u=>/upcitemdb|openproductsfacts|openfoodfacts|openbeautyfacts|\/modelFacts\//.test(u))));assert.equal((await cache()).length,1);
 
   // The existing full reset also removes the new catalogue cache.
   {await reveal(page.locator('#modal [data-action="close-modal"]').first());await page.locator('#modal [data-action="close-modal"]').first().click();}

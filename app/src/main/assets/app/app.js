@@ -1,8 +1,9 @@
 'use strict';
 
-const APP_VERSION = '1.25.0-test';
+const APP_VERSION = '1.26.0-test';
 const PUBLIC_VIEWER_URL = 'https://passpilot-app.web.app/pass/';
 const UPDATE_HISTORY = [
+  {version:'1.26.0-test',date:'05.10.2026',changes:['Vier direkte Einstiege: Produkt, Vertrag/Finanzierung, Versicherung/Garantie und Termin/Wartung.','Scan-Angaben sofort korrigieren und Rechnungspositionen mit Einzelpreis auswählen; optionale Schritte überspringen.','Als Nächstes bündelt Fristen, Wartungspläne und eigene Termine; erledigte Termine bleiben im Kalender.','Sync zeigt Status, letzten Erfolg und verständliche Konfliktvorschau; Verschlüsselung und sicherer Abgleich bleiben erhalten.','Fester Wiederholungsrhythmus oder Intervall ab Erledigung; klare Finanzierungswerte und eigene Fälligkeit der Schlussrate.','Assistent beantwortet Produktfragen aus dem eigenen Archiv und geprüften Modelldaten mit Quellen; kein automatischer Dokumentversand.']},
   {version:'1.25.0-test',date:'05.10.2026',changes:['Verträge & Termine: alle Arten gemeinsam hinzufügen und eigene Eintragsarten verwalten.','Schlussrate aus Gesamtsumme, Anzahlung und Monatsraten direkt berechnen; besser lesbare Finanzierung.','Einmalige oder wiederkehrende Termine; Garantieverlängerungen mit bestehendem Produkt verknüpfen.','Bestätigungs-E-Mail mit klarer Rückmeldung; Firebase-Einrichtung für Google, App-Domain und Android-Zertifikate.','Zahlungen bleiben deaktiviert; vorhandene Plus-Funktionen sind weiter im Testmodus nutzbar.']},
   {version:'1.24.0-test',date:'04.10.2026',changes:['Kompakte Übersicht mit direkten Zugängen zu Verträgen, Wartungen und geschützten Gerätepasswörtern.','Verträge und Wartungen direkt anlegen, mit oder ohne Gerät; weniger Pflichtfelder und einheitliche Auswahlfelder und Schalter.','E-Mail-Bestätigung ohne Abmelden prüfen; Google-Anmeldung für Web und Android vorbereitet.','Verschlüsselter Sync fängt gleichzeitige Ersteinrichtung und wechselnde Dateistände ab.','Fehler und Ideen mit geprüfter Bildschirmvorschau melden; Benachrichtigungskanäle zentral wählen.','Alle vorhandenen Plus-Funktionen im Testmodus offen, Zahlungen aus; Android-Zurück schließt Dialoge und navigiert innerhalb der App.']},
   {version:'1.23.0-test',date:'04.10.2026',changes:['Ratenkauf, Leasing, Geräteverträge, Versicherungen und Garantieverlängerungen privat am Produkt verwalten.','Bestätigte Zahlungen, Restbeträge, Rückgabe- und Kündigungsfristen im Kalender; Finanzierungsdiagramme nur Plus / Family / Dauerfreischaltung.','Wartungsvorschläge für Fahrzeuge, Heizung und Pumpen; Folge-Termine erst nach bestätigter Erledigung.','Verschlüsselte Geräte-PINs und Eselsbrücken mit separatem Passwort, automatischem Sperren und Ausschluss aus öffentlichen Freigaben.','Kleinanzeigen-/eBay-Vorbereitung mit kopierbaren Daten und Produktfotos. Tarife und Einmalcode-Register für Firebase vorbereitet, Zahlungen bleiben deaktiviert.']},
@@ -259,8 +260,8 @@ function getActions() {
   for(const p of state.products){
     const rd=daysUntil(p.returnUntil);
     if(rd!=null&&rd>=0&&rd<=30) actions.push({productId:p.id,kind:rd<=3?'danger':'warn',icon:'↩️',title:rd===0?'Rückgabefrist endet heute':`Rückgabefrist in ${rd} Tagen`,detail:productTitle(p),date:p.returnUntil});
-    const wd=daysUntil(p.warrantyUntil);
-    if(wd!=null&&wd>=0&&wd<=90) actions.push({productId:p.id,kind:wd<=14?'warn':'neutral',icon:'🛡️',title:wd===0?'Garantie endet heute':`Garantie endet in ${wd} Tagen`,detail:productTitle(p),date:p.warrantyUntil});
+    const warranty=PassPilotObligations.effectiveWarranty(p),wd=daysUntil(warranty);
+    if(wd!=null&&wd>=0&&wd<=90) actions.push({productId:p.id,kind:wd<=14?'warn':'neutral',icon:'🛡️',title:wd===0?'Garantie endet heute':`Garantie endet in ${wd} Tagen`,detail:productTitle(p),date:warranty});
     const md=daysUntil(p.nextMaintenance);
     if(md!=null&&md<=30) actions.push({productId:p.id,kind:md<0?'danger':md<=7?'warn':'neutral',icon:'🔧',title:md<0?`Wartung seit ${Math.abs(md)} Tagen fällig`:md===0?'Wartung heute fällig':`Wartung in ${md} Tagen`,detail:productTitle(p),date:p.nextMaintenance});
     if(p.status!=='sold'&&PassPilotUpgrades.paidCached('contractReminders'))for(const event of PassPilotObligations.events(p)){const d=daysUntil(event.date);if(d!=null&&d<=30)actions.push({productId:p.id,kind:d<0?'danger':d<=7?'warn':'neutral',icon:event.icon,title:event.title+(d<0?' · Frist vergangen':d===0?' · heute':' · in '+d+' Tagen'),detail:event.detail,date:event.date});}
@@ -316,11 +317,8 @@ function maybeShowIntro(){if(window.PassPilotPendingHandoff)return;
 }
 
 function dashboardView() {
-  const actions=getActions(),products=state.products.filter(p=>p.recordKind!=='contract').slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
-  return `<section class="hero compact-hero"><div><div class="eyebrow">Dein Produktarchiv</div><h1>Alles im Blick.</h1><p>Produkte, Unterlagen und nächste Termine.</p></div><button class="primary-btn" data-action="new-product">＋ Produkt</button></section>
-  ${PassPilotOrganizer.shortcuts()}
-  <div class="section-title"><h2>Jetzt wichtig</h2><button class="ghost-btn" data-nav="actions">${actions.length?'Alle '+actions.length:'Fristen'}</button></div>${actions.length?`<div class="action-list">${actions.slice(0,3).map(actionRow).join('')}</div>`:'<div class="empty compact-empty">Keine dringenden Fristen.</div>'}
-  <div class="section-title"><h2>Deine Produkte</h2><button class="ghost-btn" data-nav="products">Alle</button></div>${products.length?`<div class="product-list">${products.slice(0,3).map(productRow).join('')}</div>`:'<div class="empty"><strong>Starte mit deinem ersten Produkt.</strong><p>Code scannen, Rechnung oder Foto auswählen.</p><button class="soft-btn" data-action="new-product">Produkt hinzufügen</button></div>'}`;
+ const products=state.products.filter(p=>p.recordKind!=='contract').slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+ return `<section class="hero compact-hero"><div><div class="eyebrow">Dein Produktarchiv</div><h1>Alles im Blick.</h1><p>Produkte, Unterlagen und nächste Termine.</p></div><button class="primary-btn" data-action="add-entry">＋ Hinzufügen</button></section>${PassPilotSync.card()}${PassPilotOrganizer.next()}${PassPilotOrganizer.shortcuts()}<div class="section-title"><h2>Deine Produkte</h2><button class="ghost-btn" data-nav="products">Alle</button></div>${products.length?`<div class="product-list">${products.slice(0,3).map(productRow).join('')}</div>`:'<div class="empty"><strong>Starte mit deinem ersten Produkt.</strong><p>Code scannen, Rechnung oder Foto auswählen.</p><button class="soft-btn" data-action="new-product">Produkt hinzufügen</button></div>'}`;
 }
 
 function productsView() { return PassPilotPlus.productsView(); }
@@ -636,7 +634,7 @@ async function handleSubmit(e) {
     p.qrCreatedAt=new Date().toISOString();saveState();closeModal();currentView='products';render();openProduct(p.id);if(form.dataset.return==='lifecycle')PassPilotLifecycle.open(p.id);toast(existing?'Gespeichert':'Produkt angelegt');if(!existing&&fd.has('findManualAfterSave')&&p.brand&&p.model)PassPilotPlus.findManual(p.id).catch(error=>toast(error.message));
   } else if(form.id==='calendarEventForm'){
     const existing=state.calendarEvents.find(event=>event.id===form.dataset.id);
-    const event=normalizeCalendarEvent({id:existing?.id||uid('event'),title:fd.get('title').trim(),date:fd.get('date'),time:fd.get('time'),notes:fd.get('notes').trim(),productId:fd.get('productId')});
+    const event=normalizeCalendarEvent({id:existing?.id||uid('event'),completedAt:existing?.completedAt,title:fd.get('title').trim(),date:fd.get('date'),time:fd.get('time'),notes:fd.get('notes').trim(),productId:fd.get('productId')});
     if(!event||!event.title)return toast('Bitte einen Titel und ein gültiges Datum eingeben.');
     if(event.productId&&!getProduct(event.productId))event.productId='';
     if(existing)Object.assign(existing,event);else state.calendarEvents.push(event);

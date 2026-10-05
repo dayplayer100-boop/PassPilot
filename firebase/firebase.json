@@ -58,12 +58,12 @@
     "redirects": [
       {
         "source": "/download/PassPilot-Test.apk",
-        "destination": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.25.0-test/PassPilot-1.25-Test.apk",
+        "destination": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.26.0-test/PassPilot-1.26-Test.apk",
         "type": 302
       },
       {
         "source": "/download/PassPilot-Test-32bit.apk",
-        "destination": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.25.0-test/PassPilot-1.25-Test-32bit.apk",
+        "destination": "https://github.com/dayplayer100-boop/PassPilot/releases/download/v1.26.0-test/PassPilot-1.26-Test-32bit.apk",
         "type": 302
       }
     ]

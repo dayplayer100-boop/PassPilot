@@ -164,3 +164,13 @@ input:not([type=checkbox]):not([type=radio]):not([type=hidden]),textarea,select{
 .type-row>span{min-width:0;overflow-wrap:anywhere}.type-row small{display:block;margin-top:5px}.type-row button{flex-shrink:0}
 #organizerAdd>.field{margin-bottom:18px}
 @media(max-width:380px){.finance-stats{grid-template-columns:1fr}.type-row{align-items:flex-start;flex-direction:column}}
+
+/* 1.26: klare Einstiege, Aufgaben, Sync und direkte Prüfung. */
+.add-options{display:grid;gap:12px}.add-options .action-row{margin:0}.next-card{margin:18px 0!important}.next-card .action-list{margin:0}
+.sync-summary{display:flex;align-items:center;gap:12px;width:100%;border:1px solid #dae4ef;border-radius:16px;background:#fff;padding:13px 16px;text-align:left;color:var(--text);margin:14px 0;font:inherit}
+.sync-summary>span:nth-child(2){flex:1;min-width:0}.sync-summary strong,.sync-summary small{display:block;overflow-wrap:anywhere}.sync-summary small{margin-top:4px;font-size:12px;color:var(--muted);line-height:1.5}
+.sync-dot{width:10px;height:10px;flex:0 0 10px;border-radius:50%;background:#8593a8}.sync-dot.synced{background:#229568}.sync-dot.pending,.sync-dot.syncing{background:#315acb}.sync-dot.attention,.sync-dot.conflict,.sync-dot.verify{background:#cf8b19}
+.capture-inline-review{margin-top:20px;padding:16px;border:1px solid #dce5f1;border-radius:16px;background:#f6f9ff}.capture-inline-review h3{margin-top:0}.capture-inline-review .primary-btn{margin-top:16px}.capture-inline-review small{font-size:12px;color:var(--muted)}.capture-inline-review small.suggested{color:#95651d}
+.receipt-selection{padding:12px;border-radius:12px;background:#edf3ff}.conflict-changes{padding:12px;background:#fff8e9;border-radius:12px}
+.next-card .badge{white-space:normal;text-align:center;max-width:100px}.assistant-product-context{display:grid;gap:6px;margin:8px 16px}.assistant-product-context label{font-size:12px;color:var(--muted)}
+.chat-references{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chat-references button{font-size:12px;padding:7px 9px;border-radius:10px}
